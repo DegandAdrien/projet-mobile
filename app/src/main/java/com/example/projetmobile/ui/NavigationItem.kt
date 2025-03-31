@@ -1,4 +1,4 @@
-package com.example.licenseplatescan.ui
+package com.example.projetmobile.ui
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

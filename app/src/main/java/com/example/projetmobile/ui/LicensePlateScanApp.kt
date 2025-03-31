@@ -10,7 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.projetmobile.ui.BottomNavigationBar
+import com.example.projetmobile.ui.screens.HistoryScreen
 import com.example.projetmobile.viewmodel.MainViewModel
+import com.example.projetmobile.ui.screens.CameraScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,6 +23,7 @@ fun LicensePlateScanApp(viewModel: MainViewModel) {
 
     Scaffold(
         bottomBar = {
+            BottomNavigationBar(navController = navController)
         }
     ) { innerPadding ->
         NavHost(
@@ -28,8 +32,13 @@ fun LicensePlateScanApp(viewModel: MainViewModel) {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable("camera") {
+                CameraScreen(
+                    viewModel = viewModel,
+                    permissionsGranted = permissionsGranted
+                )
             }
             composable("history") {
+                HistoryScreen(viewModel = viewModel)
             }
         }
     }

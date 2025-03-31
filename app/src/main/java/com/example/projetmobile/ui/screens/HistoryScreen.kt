@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.projetmobile.data.LicensePlateRecord
 import com.example.projetmobile.viewmodel.MainViewModel
 
 @Composable
@@ -56,19 +57,25 @@ fun HistoryScreen(viewModel: MainViewModel) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-                /**items(licensePlates) { record ->
-                    LicensePlateItem()
+                items(licensePlates) { record ->
+                    LicensePlateItem(
+                        record = record,
+                        onDelete = { viewModel.deleteLicensePlate(it) }
+                    )
 
                     Spacer(modifier = Modifier.height(8.dp))
                     Divider()
-                }**/
+                }
             }
         }
     }
 }
 
 @Composable
-fun LicensePlateItem() {
+fun LicensePlateItem(
+    record: LicensePlateRecord,
+    onDelete: (LicensePlateRecord) -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -83,11 +90,11 @@ fun LicensePlateItem() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "test",
+                    text = record.plateNumber,
                     style = MaterialTheme.typography.titleLarge
                 )
 
-                IconButton(onClick = {}) {
+                IconButton(onClick = { onDelete(record) }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Supprimer"
@@ -98,17 +105,16 @@ fun LicensePlateItem() {
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Date: Aujourd'hui",
+                text = "Date: ${record.getFormattedDate()}",
                 style = MaterialTheme.typography.bodyMedium
             )
 
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = "Localisation: ici",
+                text = "Localisation: ${record.getLocationString()}",
                 style = MaterialTheme.typography.bodyMedium
             )
         }
     }
 }
-

@@ -9,30 +9,46 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 interface TextRecognitionRepository {
-    suspend fun recognizeText(bitmap: Bitmap): String
+    suspend fun recognizeText(bitmap: Bitmap): TextRecognitionResult
+    fun isValidLicensePlate(text: String): Boolean
 }
+
+data class TextRecognitionResult(
+    val text: String,
+    val isLicensePlate: Boolean
+)
+
 class TextRecognitionRepositoryImpl : TextRecognitionRepository {
     private val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
-    override suspend fun recognizeText(bitmap: Bitmap): String = suspendCancellableCoroutine { continuation ->
+    // Regex pour les plaques françaises (format AA-123-AA)
+    private val frenchLicensePlatePattern = "[A-Z]{2}-\\d{3}-[A-Z]{2}".toRegex()
+
+    override suspend fun recognizeText(bitmap: Bitmap): TextRecognitionResult = suspendCancellableCoroutine { continuation ->
         val image = InputImage.fromBitmap(bitmap, 0)
         recognizer.process(image)
             .addOnSuccessListener { visionText ->
                 val detectedText = visionText.text
                 val licensePlate = extractLicensePlate(detectedText)
-                continuation.resume(licensePlate ?: detectedText)
+
+                if (licensePlate != null) {
+                    continuation.resume(TextRecognitionResult(licensePlate, true))
+                } else {
+                    continuation.resume(TextRecognitionResult(detectedText, false))
+                }
             }
             .addOnFailureListener { e ->
                 continuation.resumeWithException(e)
             }
     }
 
+    override fun isValidLicensePlate(text: String): Boolean {
+        return frenchLicensePlatePattern.matches(text)
+    }
+
     private fun extractLicensePlate(text: String): String? {
-        // Adaptation aux plaques francaises: AA-123-AA
-        val frenchPattern = "[A-Z]{2}-\\d{3}-[A-Z]{2}".toRegex()
-
-        val matches = frenchPattern.findAll(text)
-
+        val matches = frenchLicensePlatePattern.findAll(text)
         return matches.firstOrNull()?.value
     }
 }
+

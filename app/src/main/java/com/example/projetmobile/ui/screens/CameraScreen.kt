@@ -21,7 +21,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.PhotoCamera
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
@@ -56,6 +55,7 @@ fun CameraScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
     val processingImage by viewModel.processingImage.collectAsState()
     val lastDetectedText by viewModel.lastDetectedText.collectAsState()
+    val errorMessage by viewModel.errorMessage.collectAsState()
     var editableText by remember { mutableStateOf("") }
 
     if (!permissionsGranted) {

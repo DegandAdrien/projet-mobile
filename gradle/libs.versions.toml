@@ -14,7 +14,6 @@ playServicesLocation = "21.3.0"
 cameraCore = "1.4.2"
 cameraView = "1.4.2"
 navigationCompose = "2.7.4"
-playServicesLocation = "21.3.0"
 roomRuntime = "2.6.1"
 textRecognition = "16.0.1"
 
@@ -44,7 +43,6 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraCore" }
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraView" }
-play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 text-recognition = { module = "com.google.mlkit:text-recognition", version.ref = "textRecognition" }
 
 [plugins]

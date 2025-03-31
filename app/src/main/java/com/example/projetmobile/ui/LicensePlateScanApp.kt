@@ -15,7 +15,6 @@ import com.example.projetmobile.ui.screens.HistoryScreen
 import com.example.projetmobile.viewmodel.MainViewModel
 import com.example.projetmobile.ui.screens.CameraScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LicensePlateScanApp(viewModel: MainViewModel) {
     val navController = rememberNavController()

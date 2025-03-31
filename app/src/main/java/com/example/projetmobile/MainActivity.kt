@@ -15,7 +15,9 @@ import com.example.projetmobile.ui.theme.ProjetMobileTheme
 import com.example.projetmobile.viewmodel.MainViewModel
 import androidx.compose.material3.Surface
 import com.example.projetmobile.ui.LicensePlateScanApp
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModels()
 
@@ -38,6 +40,9 @@ class MainActivity : ComponentActivity() {
         val permissionsToRequest = requiredPermissions.filter {
             ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
         }.toTypedArray()
+
+        println("yolo")
+        println(permissionsToRequest)
 
         if (permissionsToRequest.isNotEmpty()) {
             permissionLauncher.launch(permissionsToRequest)

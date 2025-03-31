@@ -67,6 +67,10 @@ dependencies {
     implementation(libs.androidx.camera.core)
     implementation(libs.androidx.camera.view)
 
+    implementation(libs.play.services.location)
+
+    implementation(libs.text.recognition)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

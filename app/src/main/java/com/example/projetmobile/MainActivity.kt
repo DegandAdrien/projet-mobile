@@ -7,10 +7,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.compose.material3.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.core.content.ContextCompat
 import com.example.projetmobile.ui.theme.ProjetMobileTheme
 import com.example.projetmobile.viewmodel.MainViewModel
+import androidx.compose.material3.Surface
+import com.example.projetmobile.ui.LicensePlateScanApp
 
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -45,9 +49,17 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent {
         checkAndRequestPermissions()
 
+        setContent {
+            ProjetMobileTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    LicensePlateScanApp(viewModel)
+                }
+            }
         }
     }
 }

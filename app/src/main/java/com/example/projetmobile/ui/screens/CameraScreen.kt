@@ -121,6 +121,40 @@ fun CameraScreen(
             }
         }
 
+        errorMessage?.let { text ->
+            if (editableText.isEmpty()) {
+                editableText = text
+            }
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .align(Alignment.BottomCenter)
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(
+                        text = editableText,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        IconButton(onClick = {
+                            editableText = ""
+                            viewModel.clearData()
+                        }) {
+                            Icon(Icons.Default.Close, contentDescription = "Annuler")
+                        }
+                    }
+                }
+            }
+        }
+
+
         // Detected text card
         lastDetectedText?.let { text ->
             if (editableText.isEmpty()) {
@@ -157,13 +191,14 @@ fun CameraScreen(
                     ) {
                         IconButton(onClick = {
                             viewModel.saveLicensePlate(editableText)
+                            viewModel.clearData()
                         }) {
                             Icon(Icons.Default.Check, contentDescription = "Enregistrer")
                         }
 
                         IconButton(onClick = {
                             editableText = ""
-                            viewModel.saveLicensePlate(editableText)
+                            viewModel.clearData()
                         }) {
                             Icon(Icons.Default.Close, contentDescription = "Annuler")
                         }

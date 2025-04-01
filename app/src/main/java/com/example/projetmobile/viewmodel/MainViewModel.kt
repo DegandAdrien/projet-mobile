@@ -75,6 +75,7 @@ class MainViewModel @Inject constructor(
 
                 if (!result.isLicensePlate) {
                     _errorMessage.value = "Aucune plaque d'immatriculation détectée. Le format attendu est XX-000-XX."
+                    _lastDetectedText.value = null
                 }
 
                 _uiState.value = UiState.Success
@@ -116,6 +117,7 @@ class MainViewModel @Inject constructor(
                     )
                     licensePlateRepository.insertLicensePlate(record)
                     loadLicensePlates()
+                    _errorMessage.value = null
                     _lastDetectedText.value = null
                 } else {
                     _uiState.value = UiState.Error("Location not available")
@@ -140,6 +142,11 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             licensePlateRepository.deleteLicensePlate(record)
         }
+    }
+
+    fun clearData() {
+        _errorMessage.value = null
+        _lastDetectedText.value = null
     }
 
     sealed class UiState {

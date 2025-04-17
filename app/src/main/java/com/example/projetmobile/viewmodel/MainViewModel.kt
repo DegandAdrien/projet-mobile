@@ -74,7 +74,7 @@ class MainViewModel @Inject constructor(
                 _isValidLicensePlate.value = result.isLicensePlate
 
                 if (!result.isLicensePlate) {
-                    _errorMessage.value = "Aucune plaque d'immatriculation détectée. Le format attendu est XX-000-XX."
+                    _errorMessage.value = "Aucune plaque d'immatriculation détectée. N'accepte que les plaques françaises."
                     _lastDetectedText.value = null
                 }
 
@@ -93,7 +93,7 @@ class MainViewModel @Inject constructor(
         _isValidLicensePlate.value = isValid
 
         if (!isValid) {
-            _errorMessage.value = "Format de plaque invalide. Le format attendu est XX-000-XX."
+            _errorMessage.value = "Format de plaque invalide. N'accepte que les plaques françaises."
         } else {
             _errorMessage.value = null
         }

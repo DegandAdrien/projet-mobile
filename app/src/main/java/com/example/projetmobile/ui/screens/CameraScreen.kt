@@ -56,7 +56,9 @@ fun CameraScreen(
     val processingImage by viewModel.processingImage.collectAsState()
     val lastDetectedText by viewModel.lastDetectedText.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
-    var editableText by remember { mutableStateOf("") }
+    var editableText by remember(lastDetectedText, errorMessage) {
+        mutableStateOf(lastDetectedText ?: errorMessage ?: "")
+    }
 
     if (!permissionsGranted) {
         Box(
@@ -122,10 +124,6 @@ fun CameraScreen(
         }
 
         errorMessage?.let { text ->
-            if (editableText.isEmpty()) {
-                editableText = text
-            }
-
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -157,10 +155,6 @@ fun CameraScreen(
 
         // Detected text card
         lastDetectedText?.let { text ->
-            if (editableText.isEmpty()) {
-                editableText = text
-            }
-
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -191,6 +185,7 @@ fun CameraScreen(
                     ) {
                         IconButton(onClick = {
                             viewModel.saveLicensePlate(editableText)
+                            editableText = ""
                             viewModel.clearData()
                         }) {
                             Icon(Icons.Default.Check, contentDescription = "Enregistrer")
@@ -229,4 +224,3 @@ private fun takePicture(
         }
     )
 }
-

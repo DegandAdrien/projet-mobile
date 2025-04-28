@@ -60,10 +60,6 @@ class TextRecognitionRepositoryImpl : TextRecognitionRepository {
     }
 
     override fun isValidLicensePlate(text: String): Boolean {
-        if (text.matches("[A-Z]{2}-\\d{3}-[A-Z]{2}".toRegex())) {
-            return true
-        }
-
         if (licensePlatePatterns.any { it.matches(text) }) {
             return true
         }
